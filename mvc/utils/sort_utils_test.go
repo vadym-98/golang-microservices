@@ -40,6 +40,7 @@ func getElements(n int) []int {
 	i := 0
 	for j := n - 1; j >= 0; j-- {
 		result[i] = j
+		i++
 	}
 
 	return result
