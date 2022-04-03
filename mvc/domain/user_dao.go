@@ -3,6 +3,7 @@ package domain
 import (
 	"fmt"
 	"github.com/vadym-98/golang-microservices/mvc/utils"
+	"log"
 	"net/http"
 )
 
@@ -15,16 +16,30 @@ var (
 			Email:     "myemail@gmail.com",
 		},
 	}
+	UserDao usersDaoInterface
 )
 
-func GetUser(userId int64) (*User, *utils.ApplicationError) {
+func init() {
+	log.Println("init from user_dao file")
+	UserDao = &userDao{}
+}
+
+type usersDaoInterface interface {
+	GetUser(int64) (*User, *utils.ApplicationError)
+}
+
+type userDao struct{}
+
+func (u *userDao) GetUser(userId int64) (*User, *utils.ApplicationError) {
+	log.Println("we are accessing the database")
+
 	if user := users[userId]; user != nil {
 		return user, nil
 	}
 
 	return nil, &utils.ApplicationError{
-		Message: fmt.Sprintf("user with id: '%v' was not found", userId),
+		Message:    fmt.Sprintf("user with id: '%v' was not found", userId),
 		StatusCode: http.StatusNotFound,
-		Code: "not_found",
+		Code:       "not_found",
 	}
 }

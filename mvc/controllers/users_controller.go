@@ -14,9 +14,9 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 	userId, err := strconv.ParseInt(userIdParam, 10, 64)
 	if err != nil {
 		apiErr := &utils.ApplicationError{
-			Message: "user_id must be a number",
+			Message:    "user_id must be a number",
 			StatusCode: http.StatusBadRequest,
-			Code: "bad_request",
+			Code:       "bad_request",
 		}
 
 		jsonValue, _ := json.Marshal(apiErr)
@@ -27,7 +27,7 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	user, apiErr := services.GetUser(userId)
+	user, apiErr := services.UsersService.GetUser(userId)
 	if apiErr != nil {
 		jsonValue, _ := json.Marshal(apiErr)
 

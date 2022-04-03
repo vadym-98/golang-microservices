@@ -14,7 +14,7 @@ func TestGetUserNoUserFound(t *testing.T) {
 	// Initialization
 
 	// Execution
-	user, appErr := GetUser(wrongTestUserId)
+	user, appErr := UserDao.GetUser(wrongTestUserId)
 
 	// Validation
 	assert.Nil(t, user, fmt.Sprintf("we were not expecting user with id: %v", wrongTestUserId))
@@ -38,7 +38,7 @@ func TestGetUserNoUserFound(t *testing.T) {
 }
 
 func TestGetUserNoError(t *testing.T) {
-	user, appErr := GetUser(correctTestUserId)
+	user, appErr := UserDao.GetUser(correctTestUserId)
 
 	assert.Nil(t, appErr)
 	assert.NotNil(t, user)
